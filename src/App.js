@@ -1,7 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import {Display} from "./comp/display"
+import {useState, useEffect} from 'react' ;
+
+
 function App() {
+
+  const [yash, setyash] = useState([]) ;
+
+  useEffect(()=>{
+     fetch("/api").then((res)=>{
+      if (res.ok)
+      {
+        return res.json() ;
+      }
+    }).then(data=>{
+      console.log(data) ;
+    })
+  },[]) ;
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +31,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React <Display />
+          Learn React
         </a>
       </header>
     </div>
