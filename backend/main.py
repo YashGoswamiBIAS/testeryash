@@ -1,24 +1,27 @@
 from flask import Flask
-import pyrebase
-
-config = {
-  "apiKey": "AIzaSyAcZk0feux91SLAqw1iSvkw66r1Se5IcmA",
-  "authDomain": "little-angels-school-5cefc.firebaseapp.com",
-  "databaseURL": "https://little-angels-school-5cefc-default-rtdb.firebaseio.com",
-  "projectId": "little-angels-school-5cefc",
-  "storageBucket": "little-angels-school-5cefc.appspot.com",
-  "messagingSenderId": "210531676536",
-  "appId": "1:210531676536:web:f802f857035bf58b42988d",
-  "measurementId": "G-T5V41GVRMZ"
-}
-
-firebase = pyrebase.initialize_app(config=config)
-database = firebase.database()
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 
+CORS(app)
+
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+
+cred = credentials.Certificate("./little-angels-school-5cefc-firebase-adminsdk-lf3xq-3f93d9b270.json")
+firebase_admin.initialize_app(cred,{
+  "databaseURL" : "https://little-angels-school-5cefc-default-rtdb.firebaseio.com/"
+})
+
+ref = db.reference("/")
+
+
+
 @app.route("/api")
+@cross_origin()
 def api():
-    return dict(database.child().get().val())
+    return ref.get()
 
 
 if __name__ == "__main__":

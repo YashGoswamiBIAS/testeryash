@@ -2,13 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react' ;
 
-
 function App() {
 
   const [yash, setyash] = useState([]) ;
-
   useEffect(()=>{
-     fetch("/api").then((res)=>{
+    fetch(process.env.REACT_APP_APP+"/api").then((res)=>{
       if (res.ok)
       {
         return res.json() ;
